@@ -1,27 +1,9 @@
+orbs:
+  node: circleci/node@5.0.0
+
 version: 2.1
 
-jobs:
-  sayhelloWorld:
-    description: A job that says Hello
-    machine: true
-    steps:
-      - run: echo "Hello World!"
-  sayhelloWithParams:
-    description: A job that says Hello
-    parameters:
-      saywhat:
-        description: "To whom shall we say hello?"
-        default: "World"
-        type: string
-    machine: true
-    steps:
-      - run: echo "Hello << parameters.saywhat >>"
-
 workflows:
-  monWorkflow:
+  app-tests:
     jobs:
-      - sayhelloWithParams:
-          saywhat: Intégration Web
-      - sayhelloWorld
-      - sayhelloWithParams:
-          saywhat: Everyone
+      - node/test
