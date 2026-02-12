@@ -1,23 +1,19 @@
 version: 2.1
 
 jobs:
-  checkoutAndTest:
-    docker:
-      - image: cimg/node:17.4.0
-    steps:
-      - checkout
-      - run: node --version
-      - run: npm --version
-      - run: npm install
-      - run: npm run test
-  afterTests:
+  sayhelloWithParams:
+    description: A job that says Hello
+    parameters:
+      saywhat:
+        description: "To whom shall we say hello?"
+        default: "World"
+        type: string
     machine: true
     steps:
-      - run: echo "tests have passed!"
+      - run: echo "Hello << parameters.saywhat >>"
+
 workflows:
-  build:
+  monWorkflow:
     jobs:
-      - checkoutAndTest
-      - afterTests:
-          requires:
-            - checkoutAndTest
+      - sayhelloWithParams:
+          saywhat: Everyone
